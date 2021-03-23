@@ -39,10 +39,28 @@ Theta_grad = zeros(size(Theta));
 %        Theta_grad - num_users x num_features matrix, containing the 
 %                     partial derivatives w.r.t. to each element of Theta
 %
-
-
-
-
+ 
+ 
+%%%%% compute the cost function without regularization %%%%%%%%%%%%%%%%%
+ 
+    J = 1/2 * sum(sum(((X * Theta' - Y).^2 ).* R)) + lambda/2 * sum(sum(Theta.^2)) + lambda/2 * sum(sum(X.^2))
+%%%%%%%%%%% computer partial derivatives for X (gradient of X)
+    for i =1:num_movies
+      index = find(R(i,:)==1);
+      theta = Theta(index,:);
+      y = Y(i,index);
+      x = X(i,:);
+      X_grad(i,:) = (x * theta' - y ) * theta + lambda * x;
+    end
+%%%%%%%%%%% computer partial derivatives for Theta (gradient of Theta) 
+    for i =1:num_users
+      index = find(R(:,i)==1);
+      theta =Theta(i,:);
+      y = Y(index,i);
+      x = X(index,:);
+      Theta_grad(i,:) = (x * theta' - y )' * x + lambda * theta;
+    end
+    %Theta_grad = (X * Theta' - Y) * X .* R + lambda * Theta;
 
 
 
