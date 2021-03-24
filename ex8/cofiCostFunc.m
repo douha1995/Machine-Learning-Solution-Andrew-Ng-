@@ -60,7 +60,7 @@ Theta_grad = zeros(size(Theta));
       x = X(index,:);
       Theta_grad(i,:) = (x * theta' - y )' * x + lambda * theta;
     end
-    %Theta_grad = (X * Theta' - Y) * X .* R + lambda * Theta;
+    
 
 
 
